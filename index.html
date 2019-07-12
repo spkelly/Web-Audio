@@ -15,19 +15,60 @@
       left:0px;
       right: 0px;
     }
-    .button__holder{
-      width: 100px;
-      height: 100px;
+
+
+    .button{
+      padding: 8px;
+      font-size: 16px;
+      border-radius:6px;
+      font-weight: lighter;
+      font-family: sans-serif;
+      background-color: transparent;
+      border:1px solid #73a3f0;
+      color: #73a3f0;
+    }
+
+    .button__row{
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+
+    .visualizer{
+      border: 1px solid #73a3f0;
+      border-radius: 10px;
+      width: 400px;
+      height: 200px;
+    }
+
+    .paragraph{
+      font-size: 24px;
+      color: #73a3f0;
+      text-align: center;
+    }
+
+    .heading__primary{
+      font-size: 42;
+      color: #73a3f0;
+      text-align: center;
     }
   </style>
   <title>Document</title>
 </head>
 <body>
   <div class="flex__container">
-    <div class="button__holder">
-        <button id="click-me">Turn on Microphone</button>
+    <div class="wrapper">
+      <h1 class="heading__primary">Waveform Visualizer</h1>
+      <div class='display'>
+        <p class="paragraph">The microphone is: <span class="mic_indicator"></span></p>
+      </div>
+      <canvas class="visualizer" width="400" height="200"></canvas>
+      <div class="button__row">
+        <button class="button" id="click-me">Toggle Microphone</button>
+        <button class="button log__button" >Log debug to console</button>
+      </div>
     </div>
-
   </div>
 <script src="script.js"></script>  
 </body>
