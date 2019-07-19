@@ -1,23 +1,22 @@
 (()=>{
   let analyzer;
   let ac;
+  let globalStream;
+  let playAnimation = false;
+
   let canvas = document.querySelector('.visualizer');
   let logButton = document.querySelector('.log__button');
   let micIndicator = document.querySelector('.mic_indicator');
   let startButton = document.querySelector('#click-me');
   let ctx = canvas.getContext("2d");
+  
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
   const WIDTH = canvas.width;
   const HEIGHT = canvas.height;
   const BACKGROUND_COLOR = '#1b283d';
 
 
-  console.log(micIndicator);
 
-
-  let globalStream;
-  let animation;
-
-  let playAnimation = false;
 
   let settings = {
     micEnabled:false,
@@ -30,14 +29,13 @@
   initCanvas();
   updateDisplay();
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
+ 
 
 
   ac = new AudioContext();
   analyzer = ac.createAnalyser();
 
   startButton.addEventListener('click',function(){
-
 
     if(settings.micEnabled){
       stopStream();
@@ -74,12 +72,13 @@
     function connectAudioNodes(...nodes){
       nodes.forEach((node, currentIndex, nodes)=>{
         if(currentIndex != nodes.length - 1){
+          if(node.connect == undefined){
+            throw new Error(`perameter ${index + 1} is not an audio node`);
+          }
           node.connect(nodes[currentIndex + 1])
         }
-        else{
-          console.log('on the last index')
-        }
       })
+      return nodes[node.length - 1];
     }
 
 

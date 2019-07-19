@@ -1,4 +1,4 @@
-class Visualizer {
+class Visualiser {
   constructor(audioContext, inputNode){
     this.audioContext = audioContext;
     this.analyzerNode = this.audioContext.createAnalyser();
