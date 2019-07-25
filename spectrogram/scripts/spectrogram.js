@@ -12,7 +12,7 @@ class Spectrogram {
     this._canvasContext.height = window.innerHeight;
     this._micSource = null;
     this._currentCol = 0;
-    this._colorScale = chroma.scale(['red','yellow','green','blue']).domain([0.00, -140]);
+    this._colorScale = chroma.scale(['#030591','green','#fff200','red','black']).domain([-140,-100,-80,-60,-40]).mode('lrgb');
     // this.analyser.connect(this.audioContext.destination);
     // this._oscillatorNode.connect(this._analyser);
   }
