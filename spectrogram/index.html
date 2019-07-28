@@ -6,11 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./styles/style.css">
   <title>Spectrogram</title>
-  <canvas class="waterfall" width="600" height="200"></canvas>
+  <div class="canvas__wrapper">
+    <canvas class="waterfall" width="900" height="450"></canvas>
+    <canvas class="grid__canvas" width="1200" height="600"></canvas>
+  </div>
   <button class="button start">Start</button>
 </head>
 <body>
-  <script src="scripts/chroma/chroma.min.js"></script>
+  <script src='./scripts/chroma/chroma.min.js'></script>
   <script src="./scripts/spectrogram.js"></script>
   <script src="./scripts/main.js"></script>
 </body>
