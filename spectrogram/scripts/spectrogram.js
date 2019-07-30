@@ -5,7 +5,7 @@ class Spectrogram {
     this.audioContext = audioContext;
     this._oscillatorNode = this.audioContext.createOscillator();
     this._analyser = this.audioContext.createAnalyser();
-    this._analyser.fftSize = 4096;
+    this._analyser.fftSize = 4096 *2;
     this._spectrographCanvas = canvas || document.querySelector('.waterfall')
     this._spectrographCanvasCtx = this._spectrographCanvas.getContext('2d');
     this._micSource = null;
@@ -20,7 +20,7 @@ class Spectrogram {
   start(){
     this._spectrographCanvas.width = window.innerWidth;
     console.log('starting');
-    // this._oscillatorNode.frequency.setValueAtTime(2000, this.audioContext.currentTime);
+    // this._oscillatorNode.frequency.setValueAtTime(12000, this.audioContext.currentTime);
     // this._oscillatorNode.start();
     if(!this._micSource){
       this.connectMic();
@@ -47,7 +47,13 @@ class Spectrogram {
 
 
   _getFreqColor(data){
-    return this._colorScale(data);
+    return this._colorScale(data)
+  }
+
+  _getColorChannel(data,channel){
+    {
+      return this._colorScale(data).get(`rgb.${channel}`);
+    }
   }
 
   _draw(data){
@@ -57,11 +63,23 @@ class Spectrogram {
   }
 
   _addWaterFallCol(data){
-    for(let i = 0; i < data.length; i++){
-      let currentColor = data[i]
-      this._spectrographCanvasCtx.fillStyle = this._getFreqColor(currentColor)
-      this._spectrographCanvasCtx.fillRect(0,i,1,1);
+
+    let testImage = this._spectrographCanvasCtx.createImageData(1, 512);
+
+    for(let i = 0; i< testImage.data.length; i += 4){
+      testImage.data[i] = this._getColorChannel(data[i], 'r');
+      testImage.data[i + 1] = this._getColorChannel(data[i], 'g');
+      testImage.data[i + 2] = this._getColorChannel(data[i], 'b');
+      testImage.data[i + 3] = 255;
     }
+
+    this._spectrographCanvasCtx.putImageData(testImage,0,0)
+
+    // for(let i = 0; i < data.length; i++){
+    //   let currentColor = data[i]
+    //   this._spectrographCanvasCtx.fillStyle = this._getFreqColor(currentColor)
+    //   this._spectrographCanvasCtx.fillRect(0,i,1,1);
+    // }
   }
   _shiftWaterfall(){
     let waterfall = this._spectrographCanvasCtx.getImageData(0,0,this._spectrographCanvas.width,this._spectrographCanvas.height);
