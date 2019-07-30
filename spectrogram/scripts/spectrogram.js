@@ -7,35 +7,18 @@ class Spectrogram {
     this._analyser = this.audioContext.createAnalyser();
     this._analyser.fftSize = 4096;
     this._spectrographCanvas = canvas || document.querySelector('.waterfall')
-    this._gridCanvas = document.querySelector('.grid__canvas');
-    this._gridCanvasCtx = this._gridCanvas.getContext('2d');
     this._spectrographCanvasCtx = this._spectrographCanvas.getContext('2d');
     this._micSource = null;
     this._currentCol = 0;
-    this._colorScale = chroma.scale(['#00014d','green','#fff200','red','black']).domain([-140,-100,-80,-60,-40]).mode('lrgb');
+    this._colorScale = chroma.scale(['#000326','green','#fff200','red','#660000']).domain([0,255]).mode('lrgb');
     // this.analyser.connect(this.audioContext.destination);
     this._oscillatorNode.connect(this._analyser);
     this._frameCounter = 0;
   }
 
 
-  _initGrid(){
-    console.log(window.devicePixelRatio)
-    console.log('here');
-    console.log(this._gridCanvasCtx)
-    this._gridCanvasCtx.font = '12px serif';
-    this._gridCanvasCtx.fillText('Test Text',0,20)
-    // Get the created canvas
-    // create another canvas on top of it;
-
-  }
-  _renderGridLines(number){
-
-  }
-
-
   start(){
-    this._initGrid();
+    this._spectrographCanvas.width = window.innerWidth;
     console.log('starting');
     // this._oscillatorNode.frequency.setValueAtTime(2000, this.audioContext.currentTime);
     // this._oscillatorNode.start();
@@ -46,6 +29,7 @@ class Spectrogram {
   }
 
   connectMic(){
+    
     navigator.mediaDevices.getUserMedia({audio:true}).then((stream)=>{
       let source = this.audioContext.createMediaStreamSource(stream);
       this._micSource = source;
@@ -86,8 +70,8 @@ class Spectrogram {
   }
 
   _animateSpectrogram(){
-    let dataArray = new Float32Array(this._analyser.frequencyBinCount);
-    this._analyser.getFloatFrequencyData(dataArray);
+    let dataArray = new Uint8Array(this._analyser.frequencyBinCount);
+    this._analyser.getByteFrequencyData(dataArray);
     this._draw(dataArray);
   }
 }

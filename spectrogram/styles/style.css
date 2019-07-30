@@ -1,6 +1,42 @@
-.waterfall{
+h3{
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-family: 'Audiowide', cursive;
+
+}
+.background{
   position: absolute;
-  left: 60px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  top: 0px;
+  background-color: #000326;
+  z-index: -10000;
 }
 
+.spectrogram{
+}
 
+.spectrogram__controls{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.control__button{
+  color:#2e2e2e;
+  background-color: #c9c9c9;
+  font-size: 24px;
+  border:none;
+  height: 60px;
+  width: 60px;
+  padding: 10px;
+  border-radius: 100%;
+  transition: all 150ms ease;
+}
+
+.control__button:hover{
+  background-color: #2e2e2e;
+  color: #c9c9c9;
+}
