@@ -3,12 +3,14 @@
 class Spectrogram {
   constructor(audioContext, canvas){
     this.audioContext = audioContext;
+    this._isOn = false;
     this._oscillatorNode = this.audioContext.createOscillator();
     this._analyser = this.audioContext.createAnalyser();
     this._analyser.fftSize = 4096 *2;
     this._spectrographCanvas = canvas || document.querySelector('.waterfall')
     this._spectrographCanvasCtx = this._spectrographCanvas.getContext('2d');
     this._micSource = null;
+    this._animationId = null;
     this._currentCol = 0;
     this._colorScale = chroma.scale(['#000326','green','#fff200','red','#660000']).domain([0,255]).mode('lrgb');
     // this.analyser.connect(this.audioContext.destination);
@@ -16,34 +18,60 @@ class Spectrogram {
     this._frameCounter = 0;
   }
 
+  stop(){
+    if(this._isOn){
+      this._stopAudio();
+      this._endAnimation();
+      this._disconnectMic();
+      this._isOn = false;
+    }
+    else{
+      console.warn('the spectrogram is not playing');
+    }
+  }
+
 
   start(){
-    this._spectrographCanvas.width = window.innerWidth;
-    console.log('starting');
+    if(!this._isOn){
+      this._isOn = true;
+      this._spectrographCanvas.width = window.innerWidth;
+      if(!this._micSource){
+        this.connectMic();
+      }
+      this._animateSpectrogram();
+    }
+    else{
+      console.warn('the spectrogram is already playing');
+    }
     // this._oscillatorNode.frequency.setValueAtTime(12000, this.audioContext.currentTime);
     // this._oscillatorNode.start();
-    if(!this._micSource){
-      this.connectMic();
-    }
-    this._animateSpectrogram();
   }
 
   connectMic(){
-    
     navigator.mediaDevices.getUserMedia({audio:true}).then((stream)=>{
       let source = this.audioContext.createMediaStreamSource(stream);
       this._micSource = source;
       source.connect(this._analyser);
+      console.log(this._micSource)
     })
   }
-
-  stop(){
-    
+  
+  _stopAudio(){
+    let audioTracks = this._micSource.mediaStream.getTracks();
+    audioTracks.map((track)=>{
+      track.stop();
+    })
+  }
+  
+  _endAnimation(){
+    cancelAnimationFrame(this._animationId);
+    this._spectrographCanvasCtx.clearRect(0,0, this._spectrographCanvas.width, this._spectrographCanvas.height);
+  }
+  
+  _disconnectMic(){
+    this._micSource = null;
   }
 
-  _init(){
-    
-  }
 
 
   _getFreqColor(data){
@@ -51,15 +79,13 @@ class Spectrogram {
   }
 
   _getColorChannel(data,channel){
-    {
-      return this._colorScale(data).get(`rgb.${channel}`);
-    }
+    return this._colorScale(data).get(`rgb.${channel}`);
   }
 
   _draw(data){
     this._shiftWaterfall();
     this._addWaterFallCol(data);
-    requestAnimationFrame(this._animateSpectrogram.bind(this));
+    this._animationId = requestAnimationFrame(this._animateSpectrogram.bind(this));
   }
 
   _addWaterFallCol(data){
