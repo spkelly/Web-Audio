@@ -15,7 +15,88 @@ h3{
   z-index: -10000;
 }
 
-.spectrogram{
+
+.color-chart{
+  position: relative;
+  min-width: 120px;
+  
+}
+
+.freq-scale{
+  position: relative;
+  min-width: 40px;
+  border-right: 1px solid white;
+  height:512px;
+}
+
+.color-chart__scale{
+ width:16px;
+ display: block;
+ border: 1px solid white;
+
+ background-image: linear-gradient(#660000,#fff200,green,#000326);
+ margin: 10px auto;
+ height: calc(100% - 22px);
+}
+
+.color-chart__label-min{
+  margin: 0;
+  left: 6px;
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+  bottom: 0px;
+}
+.color-chart__label-mid{
+  margin: 0;
+  left: 6px;
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+  bottom: 50%;
+}
+.color-chart__label-max{
+  margin: 0;
+  left: 16px;
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+
+}
+
+
+.freq-chart__label-min{
+  right: 4px;
+  margin: 0;
+
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+  bottom: 0px;
+}
+.freq-chart__label-mid{
+  right: 4px;
+  margin: 0;
+
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+  bottom: 50%;
+}
+.freq-chart__label-max{
+  right: 4px;
+  margin: 0;
+
+  text-align: end;
+  position: absolute;
+  color: white;
+  font-size: 10px;
+
 }
 
 .spectrogram__controls{
@@ -29,6 +110,9 @@ h3{
   font-size: 42px;
 }
 
+.flex__row{
+  display: flex;
+}
 
 .control__button{
   vertical-align: middle;

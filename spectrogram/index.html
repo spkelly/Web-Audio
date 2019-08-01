@@ -15,8 +15,20 @@
   <div class="background">
     <h3>Audio Spectrogram</h3>
     <div class="spectrogram">
-      <div class="canvas__wrapper">
-        <canvas class="waterfall"  height="512"></canvas>
+      <div class="flex__row">
+        <div class="freq-scale">
+            <p class="freq-chart__label-min">12 KHZ</p>
+            <p class="freq-chart__label-mid">6 KHZ</p>
+            <p class="freq-chart__label-max">0 HZ</p>
+        </div>
+        <div class="canvas__wrapper">
+          <canvas class="waterfall"  height="512"></canvas>
+        </div>
+        <div class="color-chart">
+          <p class="color-chart__label-min">-140 DB</p>
+          <p class="color-chart__label-max">0 DB</p>
+          <div class="color-chart__scale"></div>
+        </div>
       </div>
       <div class="spectrogram__controls">
         <button class="control__button start">

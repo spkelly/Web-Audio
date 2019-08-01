@@ -1,13 +1,15 @@
 
 
 class Spectrogram {
-  constructor(audioContext, canvas){
+  constructor(audioContext,width,height, canvas){
     this.audioContext = audioContext;
     this._isOn = false;
     this._oscillatorNode = this.audioContext.createOscillator();
     this._analyser = this.audioContext.createAnalyser();
     this._analyser.fftSize = 4096 *2;
-    this._spectrographCanvas = canvas || document.querySelector('.waterfall')
+    this._spectrographCanvas = canvas || document.querySelector('.waterfall');
+    this._spectrographCanvas.width = width;
+    this._spectrographCanvas.height = height;
     this._spectrographCanvasCtx = this._spectrographCanvas.getContext('2d');
     this._micSource = null;
     this._animationId = null;
@@ -34,7 +36,8 @@ class Spectrogram {
   start(){
     if(!this._isOn){
       this._isOn = true;
-      this._spectrographCanvas.width = window.innerWidth;
+    //       this._oscillatorNode.frequency.setValueAtTime(6000, this.audioContext.currentTime);
+    // this._oscillatorNode.start();
       if(!this._micSource){
         this.connectMic();
       }
@@ -43,8 +46,7 @@ class Spectrogram {
     else{
       console.warn('the spectrogram is already playing');
     }
-    // this._oscillatorNode.frequency.setValueAtTime(12000, this.audioContext.currentTime);
-    // this._oscillatorNode.start();
+
   }
 
   connectMic(){
