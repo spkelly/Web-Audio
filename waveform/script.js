@@ -78,7 +78,7 @@
           node.connect(nodes[currentIndex + 1])
         }
       })
-      return nodes[node.length - 1];
+      return nodes[nodes.length - 1];
     }
 
 
