@@ -8,7 +8,7 @@ window.onload = function(){
   var spectrogram;
   var icon = document.querySelector('.icon');
 
-  var canvasWidth = window.outerWidth - colorChart.clientWidth - 12;
+  var canvasWidth = document.body.clientWidth - colorChart.clientWidth - 12;
   console.log(window);
 
   var canvasHeight = 512;
@@ -32,7 +32,7 @@ window.onload = function(){
   })
 
   function resizeCanvas(){
-    canvas.width = window.outerWidth - colorChart.clientWidth - 12;
+    canvas.width = document.body.clientWidth - colorChart.clientWidth - 12;
   }
 
   window.onresize = resizeCanvas;

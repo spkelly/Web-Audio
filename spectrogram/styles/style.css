@@ -1,3 +1,8 @@
+body{
+  margin:0;
+}
+
+
 h3{
   text-align: center;
   color: white;
@@ -6,11 +11,9 @@ h3{
 
 }
 .background{
-  position: absolute;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  top: 0px;
+  padding-top:10px;
+  height: 1200px;
+  width: fit-content;
   background-color: #000326;
   z-index: -10000;
 }
